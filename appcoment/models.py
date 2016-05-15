@@ -20,10 +20,7 @@ class PostModel(models.Model):
 class CommentAbs(models.Model):
     textcomment = models.CharField(max_length=100)
     likecom = models.CharField(max_length=1, default='+')
-
-    content_type = models.ForeignKey(ContentType,
-                                     object_pk = models.TextField(_('object ID'))
-                                     )
+    content_type = models.ForeignKey(ContentType, object_pk = models.TextField(_('object ID')))
 
     class Meta:
         abstract = True
@@ -40,15 +37,12 @@ class CommentList(CommentAbs):
 class Com(models.Model):
     comtopost = models.ForeignKey(CommentList)
 
-
+"""
 class FooModel(models.Model):
     parent = models.ForeignKey('self', blank=True, null=True, related_name='children')
-    children = models.ManyToOneRel('self', blank=True, null=True, related_name='children')
+    children = models.ManyToOneRel('self', blank=True, null=True)
 
     def __init__(self, *args, **kwargs):
         super(FooModel, self).__init__(*args, **kwargs)
         self.parent.children.add(self)
-
-
-
-
+"""
