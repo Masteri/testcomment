@@ -5,19 +5,20 @@
     <title>Title</title>
 </head>
 <body>
-
-<h1>Hello!</h1>
-{% for aut in autor %}
-    <li>{{ aut.comtopost_id }} + {{ aut.comtopost}} + chield: {{ aut.child}} + url: {{ aut.get_absolute_url }}</li>
-{% endfor %}
-
-<h1>
+<h1>Post:</h1>
     {% for foo in post %}
         <li>{{ foo.id }} + </li>
         <li>{{ foo.conten }} +</li>
-<li>            chield: {{ foo.child}}</li>
+        <li>chield: {{ foo.child}}</li>
     {% endfor %}
-</h1>
+
+<h1>Comentlist!</h1>
+{% for comlss in comls %}
+    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} </li>
+    <li>{{ comlss.get_absolute_url}} {{ comlss.comtopost }} </li>
+{% endfor %}
+
+
 <h1>
     {% for comment in comments %}
         <li> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
