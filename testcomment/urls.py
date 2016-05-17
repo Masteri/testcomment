@@ -15,9 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from appcoment.views import newcabs
+from appcoment.views import newcabs, ComentListView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^$', newcabs)
+    url(r'^$', newcabs),
+    url(r'^coments/$', ComentListView.as_view()),
 ]
