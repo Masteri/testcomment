@@ -14,7 +14,7 @@ def newcabspk(request, pk):
 
 def listing(request):
     contact_list = CommentList.objects.all()
-    paginator = Paginator(contact_list, 25) # Show 25 contacts per page
+    paginator = Paginator(contact_list, 5) # Show 5 contacts per page
 
     page = request.GET.get('page')
     try:

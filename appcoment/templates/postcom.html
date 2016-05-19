@@ -17,10 +17,10 @@
 
     {% endfor %}
 
-<h1>Comentlist!</h1>
+<h1>Comentlist! All comments: {{ allcom.count }} </h1>
 {% for comlss in comls %}
-    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} {{ comlss.textcom }} {{ comlss.textcomment }}</li>
-    <li> Parent:{{ comlss.parent }} </li>
+    <li>  {{ comlss.textcom }} := {{ comlss.textcomment }}, Autor: {{ comlss.autor }}, Like: {{ comlss.likecom }} </li>
+     Parent:{{ comlss.parent }} ____|
 
 {% endfor %}
 
