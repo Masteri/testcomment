@@ -5,6 +5,7 @@
     <title>Title</title>
 </head>
 <body>
+
 {% if user.is_authenticated %}Hello, {{ user.username }}.
 
 {% endif %}
@@ -12,13 +13,20 @@
 <h1>Post:</h1>
     {% for foo in post %}
         <li>{{ foo.id }}: {{ foo.conten }} - chield: {{ foo.child}} </li>
-        <li> {{ foo.id }}:</li>
+        <br>
 
     {% endfor %}
 
 <h1>Comentlist!</h1>
 {% for comlss in comls %}
-    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} </li>
+    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} {{ comlss.textcom }} {{ comlss.textcomment }}</li>
+    <li> Parent:{{ comlss.parent }} </li>
+
+{% endfor %}
+
+<h1>Coments:</h1>
+{% for comlss in allcom %}
+    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} {{ comlss.textcom }} {{ comlss.textcomment }}</li>
     <li> Parent:{{ comlss.parent }} </li>
 
 {% endfor %}
@@ -26,7 +34,6 @@
 <h1>Coment!</h1>
     <ul>
         {% for comment in comments %}
-            <li> <strong>comments:</strong> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
             <li> <strong>comments:</strong> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
         {% endfor %}
     </ul>

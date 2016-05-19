@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from appcoment.views import newcabs, ComentListView
+from appcoment.views import newcabs, ComentListView, newcabspk, listing
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', newcabs),
+    url(r'^newcabspk/(?P<pk>[0-9]+)/$', newcabspk),
     url(r'^coments/$', ComentListView.as_view()),
+    url(r'^listing/$', listing),
 ]
