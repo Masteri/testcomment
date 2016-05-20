@@ -5,17 +5,26 @@
     <title>Title</title>
 </head>
 <body>
+<h1>Post:</h1>
+    {% for foo in post %}
+        <li>{{ foo.id }}: {{ foo.conten }} - chield: {{ foo.child}} </li>
+        <br>
 
+    {% endfor %}
+
+
+<div>
+    <ul>---</ul>
+</div>
 {% for contact in contacts %}
-    {# Each "contact" is a Contact model object. #}
-    {{ contact.textcom|upper }}<br />
-|_____
+    {# Each "contact" is a Contact model object.     {{ contact.textcom|upper }}<br />#}
+|_____{{ contact.textcomment }}, Autor:{{ contact.autor }}, Like: {{ contact.likecom }} <br />
 {% endfor %}
 
 <div class="pagination">
     <span class="step-links">
         {% if contacts.has_previous %}
-            <a href="?page={{ contacts.previous_page_number }}">previous</a>
+            <a href="?page={{ contacts.previous_page_number }}">načítať previous</a>
         {% endif %}
 
         <span class="current">
@@ -23,10 +32,19 @@
         </span>
 
         {% if contacts.has_next %}
-            <a href="?page={{ contacts.next_page_number }}">next</a>
+            <a href="?page={{ contacts.next_page_number }}">načítať ďalšie</a>
         {% endif %}
     </span>
 </div>
+<div>
+    <ul>---</ul>
+</div>
+
+<h1>Comentlist! All comments: {{ allcom.count }} </h1>
+{% for comlss in comls %}
+    <li>  {{ comlss.textcom }} := {{ comlss.textcomment }}, Autor: {{ comlss.autor }}, Like: {{ comlss.likecom }} </li>
+     Parent:{{ comlss.parent }} ____|
+{% endfor %}
 
 </body>
 </html>
