@@ -8,6 +8,7 @@ from django.utils.translation import ugettext_lazy as _
 
 
 #http://proft.me/2010/09/7/drevovidnye-struktury-dannyh-v-django/
+
 @python_2_unicode_compatible
 class PostModel(models.Model):
     title = models.CharField(max_length=200)
