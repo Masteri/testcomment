@@ -12,7 +12,9 @@ def newcabspk(request, pk):
     #comls = CommentList.objects.filter(pk=comid)
     return render_to_response('postcom.html', {'comls': comls, 'post': post, 'allcom': allcom})
 
+#https://www.sitepoint.com/hierarchical-data-database/
 #http://py-algorithm.blogspot.com/2011/07/blog-post_30.html
+#http://proft.me/2010/09/7/drevovidnye-struktury-dannyh-v-django/
 
 def listing(request):
     contact_list = CommentList.objects.all()
