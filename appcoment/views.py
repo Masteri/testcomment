@@ -1,8 +1,14 @@
-#from django.http import HttpResponse
 from django.views.generic import ListView
 from django.shortcuts import render_to_response, get_object_or_404
-from .models import  CommentList, PostModel
+from .models import  CommentList, PostModel, Genre
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template import RequestContext
+
+
+def show_genres(request):
+    return render_to_response("genres.html",
+                          { 'nodes': CommentList.objects.all()},
+                          context_instance=RequestContext(request))
 
 def lpost(request, pk):
     post = PostModel.objects.filter(pk=pk)

@@ -5,6 +5,14 @@ from django.contrib.contenttypes.models import ContentType
 from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from mptt.models import MPTTModel, TreeForeignKey
+
+class Genre(MPTTModel):
+    name = models.CharField(max_length=50, unique=True)
+    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
+
+    class MPTTMeta:
+        order_insertion_by = ['name']
 
 
 #http://proft.me/2010/09/7/drevovidnye-struktury-dannyh-v-django/
@@ -19,10 +27,11 @@ class PostModel(models.Model):
         return self.title
 
 
-class CommentAbs(models.Model):
+class CommentAbs(MPTTModel):
+    #class CommentAbs(models.Model):
     textcomment = models.CharField(max_length=100)
     likecom = models.CharField(max_length=1, default='+')
-    parent = models.ForeignKey('self', blank=True, null=True, verbose_name="parent", related_name='child')
+    parent = models.ForeignKey('self', blank=True, null=True, verbose_name="parent", related_name='child', db_index=True)
 
     def __str__(self):
         return self.textcomment
