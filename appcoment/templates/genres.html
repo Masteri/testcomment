@@ -9,7 +9,7 @@
 <ul>
     {% recursetree nodes %}
         <li>
-            {{ node.name }}
+            {{ node.textcomment }}
             {% if not node.is_leaf_node %}
                 <ul class="children">
                     {{ children }}
