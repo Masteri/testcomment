@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post comments</title>
+</head>
+<body>
+
+{% load mptt_tags %}
+
+
+<h1>Post:</h1>
+    {% for foo in post %}
+        <li>{{ foo.id }}: {{ foo.conten }} - chield: {{ foo.child}} </li>
+        <br>
+
+    {% endfor %}
+-----------------------------------
+
+
+    {% recursetree nodes %}
+        <li>
+            {{ node.textcomment }} {{ node.likecom }}
+            {% if not node.is_leaf_node %}
+                <ul class="children">
+                    {{ children }}
+                </ul>
+            {% endif %}
+        </li>
+    {% endrecursetree %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if contacts.has_previous %}
+            <a href="?page={{ contacts.previous_page_number }}">načítať previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+        </span>
+
+        {% if contacts.has_next %}
+            <a href="?page={{ contacts.next_page_number }}">načítať ďalšie</a>
+        {% endif %}
+    </span>
+</div>
+
+
+
+</body>
+</html>
