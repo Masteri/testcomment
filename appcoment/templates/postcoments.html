@@ -20,7 +20,8 @@
 
     {% recursetree nodes %}
         <li>
-            {{ node.textcomment }} {{ node.likecom }}
+            {{ node.textcomment }}
+            <a href="{{ node.get_absolute_url }}">{{ node.likecom }}</a>   :{{ node.autor }}
             {% if not node.is_leaf_node %}
                 <ul class="children">
                     {{ children }}

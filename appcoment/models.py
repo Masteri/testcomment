@@ -6,6 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
+from django.core.urlresolvers import reverse
 
 class Genre(MPTTModel):
     name = models.CharField(max_length=50, unique=True)
@@ -49,7 +50,7 @@ class CommentList(CommentAbs):
 
 
     def get_absolute_url(self):
-        return "/post/%i/" % self.pk
+        return  "/postcoments/%i/" % self.pk #reverse('like', kwargs={'pk': self.pk})  #
 
     def __str__(self):
         return self.textcomment
