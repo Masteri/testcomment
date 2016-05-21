@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from appcoment.views import newcabs, ComentListView, newcabspk, listing, lpost, show_genres, postcoments
+from appcoment.views import newcabs, ComentListView, newcabspk, listing, lpost, show_genres, postcoments, post_update
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -26,4 +26,6 @@ urlpatterns = [
     url(r'^coments/$', ComentListView.as_view()),
     url(r'^listing/$', listing),
     url(r'^genres/$', show_genres),
+    url(r'^(?P<pk>[0-9]+)/update/$', post_update),
+
 ]

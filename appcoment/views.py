@@ -32,6 +32,14 @@ def postcoments(request, pk):
     return render_to_response('postcoments.html', {"contacts": contacts, 'post': post, 'nodes': contacts}
                               , context_instance=RequestContext(request))
 
+def post_update(request, pk):
+    instance = get_object_or_404(CommentList, id=pk)
+    instance.likecom="-"
+    instance.save()
+    context = {
+        "likecom": instance.likecom  #https://www.youtube.com/watch?v=70tK2zjwM50
+    }
+    return render_to_response('postcoments.html', request, context)
 
 def lpost(request, pk):
     post = PostModel.objects.filter(pk=pk)
