@@ -54,8 +54,3 @@ class CommentList(CommentAbs):
     def __str__(self):
         return self.textcomment
 
-"""
-class Com(models.Model):
-    comtopost = models.ForeignKey(CommentList)
-"""
-

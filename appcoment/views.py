@@ -10,6 +10,29 @@ def show_genres(request):
                           { 'nodes': CommentList.objects.all()},
                           context_instance=RequestContext(request))
 
+
+
+def postcoments(request, pk):
+    post = PostModel.objects.filter(pk=pk)
+    #allcom = CommentList.objects.all()
+    contact_list = CommentList.objects.select_related('textcom').filter(textcom=pk)
+    paginator = Paginator(contact_list, 5) # Show 5 contacts per page
+
+    page = request.GET.get('page')
+    try:
+        contacts = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer, deliver first page.
+        contacts = paginator.page(1)
+    except EmptyPage:
+        #http://djbook.ru/rel1.8/topics/pagination.html#using-paginator-in-a-view
+        # If page is out of range (e.g. 9999), deliver last page of results.
+        contacts = paginator.page(paginator.num_pages)
+
+    return render_to_response('postcoments.html', {"contacts": contacts, 'post': post, 'nodes': contacts}
+                              , context_instance=RequestContext(request))
+
+
 def lpost(request, pk):
     post = PostModel.objects.filter(pk=pk)
     comls = CommentList.objects.select_related('textcom').filter(textcom=pk)
@@ -35,8 +58,6 @@ def newcabspk(request, pk):
     post = PostModel.objects.filter(pk=pk)
     comls = CommentList.objects.select_related('textcom').filter(textcom=pk)
     allcom = CommentList.objects.all()
-    #comls = CommentList.objects.filter(parent_id=pk)#.select_related().all()
-    #comls = CommentList.objects.filter(pk=comid)
     return render_to_response('postcom.html', {'comls': comls, 'post': post, 'allcom': allcom})
 
 #https://www.sitepoint.com/hierarchical-data-database/
