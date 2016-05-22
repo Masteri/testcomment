@@ -6,14 +6,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from mptt.models import MPTTModel, TreeForeignKey
-from django.core.urlresolvers import reverse
 
-class Genre(MPTTModel):
-    name = models.CharField(max_length=50, unique=True)
-    parent = TreeForeignKey('self', null=True, blank=True, related_name='children', db_index=True)
-
-    class MPTTMeta:
-        order_insertion_by = ['name']
 
 
 #http://proft.me/2010/09/7/drevovidnye-struktury-dannyh-v-django/
@@ -40,6 +33,9 @@ class CommentAbs(MPTTModel):
     def __str__(self):
         return self.textcomment
 
+    def get_absolute_url(self):
+        return  "/%i/update/" % self.pk
+
     class Meta:
         abstract = True
 
@@ -54,5 +50,5 @@ class CommentList(CommentAbs):
         return  "/postcoments/%i/" % self.pk
 
     def __str__(self):
-        return self.textcomment
+        return "Id %s: .Parent: %s. coment_id: %s " % (self.pk, self.parent, self.textcom_id )
 

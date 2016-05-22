@@ -9,7 +9,7 @@ import random
 def postcoments(request, pk):
     post = PostModel.objects.filter(pk=pk)
     contact_list = CommentList.objects.select_related('textcom').filter(textcom=pk)
-    paginator = Paginator(contact_list, 5) # Show 5 contacts per page
+    paginator = Paginator(contact_list, 20) # Show 5 contacts per page
 
     page = request.GET.get('page')
     try:
@@ -23,11 +23,14 @@ def postcoments(request, pk):
         contacts = paginator.page(paginator.num_pages)
 
     return render_to_response('postcoments.html', {"contacts": contacts, 'post': post, 'nodes': contacts})
-                              #, context_instance=RequestContext(request))
+
 
 def post_update(request, pk):
     instance = get_object_or_404(CommentList, id=pk)
-    instance.likecom="-"
+    if instance.likecom('-'):
+        instance.likecom='+'
+    elif instance.likecom('+'):
+        instance.likecom='-'
     instance.save() #entries = Entry.objects.select_for_update().filter(author=request.user)
     context = {
         "likecom": instance.likecom  #https://www.youtube.com/watch?v=70tK2zjwM50
@@ -44,7 +47,7 @@ def newcabspk(request, pk):
 
 
 
-def newcabs(request):
+def index(request):
     comls = CommentList.objects.all()
     post = PostModel.objects.all()
     counter = CommentList.objects.count()
@@ -53,16 +56,15 @@ def newcabs(request):
 
 def postaddrows(request):
     autor = User.objects.get()
-    for i in range(0, 10):                                                                 #!!!creating some Post in range 100
+    for i in range(0, 5):                                                                 #!!!creating some Post in range
         title = 'Title New:   ' + (str(uuid.uuid4()))                                      #creating random string for title
         conten = 'Content New:   ' + (str(uuid.uuid4()))                                   #creating random string for content
         PostModel.objects.create(title = title, conten= conten)                            #add to data Post
         allpost = PostModel.objects.all()                                                  #get all Posts
 
-
         for c in allpost:                                                                  #!!!for all Posts generating comments (Parrent)
             i = 0
-            r = random.randint(1, 10)
+            r = random.randint(1, 2)
             while i < r:
                 textcomment = 'Comment Text Content New:   ' + (str(uuid.uuid4()))
                 textcom = PostModel.objects.get(pk=c.pk)
@@ -70,17 +72,10 @@ def postaddrows(request):
                 i = i + 1
 
             p = CommentList.objects.all()
-
-            #for a in p:
-            #cparent = CommentList.objects.select_related('textcom').filter(textcom=a.id)
-            rr = random.randint(1, 10)
-            cc = 0
-            #while cc < rr:
-            textcomment = 'Parent? Comment Text Content New:   ' + (str(uuid.uuid4()))
-            textcom = PostModel.objects.get(pk=c.pk)
-            CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=textcom, parent= c.pk)#a.parent)
-                #    cc = cc + 1
-
+            for a in p:
+                textcomment = 'Parent? Comment Text Content New:   ' + (str(uuid.uuid4()))
+                compost = PostModel.objects.get(pk=c.pk)
+                CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=compost).move_to(a)
 
     post = PostModel.objects.all()
     counter = CommentList.objects.count()
