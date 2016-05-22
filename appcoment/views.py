@@ -1,8 +1,9 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from .models import  CommentList, PostModel, Genre
+from .models import  CommentList, PostModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth.models import User
 import uuid
+import random
 
 
 def postcoments(request, pk):
@@ -46,19 +47,41 @@ def newcabspk(request, pk):
 def newcabs(request):
     comls = CommentList.objects.all()
     post = PostModel.objects.all()
-    return render_to_response('base.html', {'comls': comls, 'post': post})
+    counter = CommentList.objects.count()
+    return render_to_response('base.html', {'comls': comls, 'post': post, 'counter': counter})
 
 
 def postaddrows(request):
-    for i in range(0, 1):
-        title = 'Title New:   ' + (str(uuid.uuid4()))
-        conten = 'Content New:   ' + (str(uuid.uuid4()))
-        PostModel.objects.create(title = title, conten= conten)
-        for c in range(0, 5):
-            #compk = CommentList
-            randomcomment = CommentList.objects.select_related('textcom').filter(textcom=i.id)
+    autor = User.objects.get()
+    for i in range(0, 10):                                                                 #!!!creating some Post in range 100
+        title = 'Title New:   ' + (str(uuid.uuid4()))                                      #creating random string for title
+        conten = 'Content New:   ' + (str(uuid.uuid4()))                                   #creating random string for content
+        PostModel.objects.create(title = title, conten= conten)                            #add to data Post
+        allpost = PostModel.objects.all()                                                  #get all Posts
+
+
+        for c in allpost:                                                                  #!!!for all Posts generating comments (Parrent)
+            i = 0
+            r = random.randint(1, 10)
+            while i < r:
+                textcomment = 'Comment Text Content New:   ' + (str(uuid.uuid4()))
+                textcom = PostModel.objects.get(pk=c.pk)
+                CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=textcom)
+                i = i + 1
+
+            p = CommentList.objects.all()
+
+            #for a in p:
+            #cparent = CommentList.objects.select_related('textcom').filter(textcom=a.id)
+            rr = random.randint(1, 10)
+            cc = 0
+            #while cc < rr:
+            textcomment = 'Parent? Comment Text Content New:   ' + (str(uuid.uuid4()))
+            textcom = PostModel.objects.get(pk=c.pk)
+            CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=textcom, parent= c.pk)#a.parent)
+                #    cc = cc + 1
 
 
     post = PostModel.objects.all()
-    counter = ''
-    return render_to_response('base.html', {'post': post})
+    counter = CommentList.objects.count()
+    return render_to_response('base.html', {'post': post, 'counter': counter})

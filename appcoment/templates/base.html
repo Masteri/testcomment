@@ -14,12 +14,9 @@
         <li><a href="{{ foo.get_absolute_url }}" >{{ foo.id }}: {{ foo.title }} </a></li> <br>
     {% endfor %}
 
-<h1>Comentlist!</h1>
-{% for comlss in comls %}
-    <li>{{ comlss.comtopost_id }}: {{ comlss.comtopost }} </li>
-     Parent:{{ comlss.parent }}
+<h1>All coments count = {{ counter }}</h1>
 
-{% endfor %}
+
 
 </body>
 </html>
