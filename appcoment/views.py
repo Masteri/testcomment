@@ -33,25 +33,6 @@ def post_update(request, pk):
     }
     return render_to_response('postcoments.html', request, context)
 
-def lpost(request, pk):
-    post = PostModel.objects.filter(pk=pk)
-    comls = CommentList.objects.select_related('textcom').filter(textcom=pk)
-    allcom = CommentList.objects.all()
-    contact_list = CommentList.objects.select_related('textcom').filter(textcom=pk)
-    paginator = Paginator(contact_list, 5) # Show 5 contacts per page
-
-    page = request.GET.get('page')
-    try:
-        contacts = paginator.page(page)
-    except PageNotAnInteger:
-        # If page is not an integer, deliver first page.
-        contacts = paginator.page(1)
-    except EmptyPage:
-        #http://djbook.ru/rel1.8/topics/pagination.html#using-paginator-in-a-view
-        # If page is out of range (e.g. 9999), deliver last page of results.
-        contacts = paginator.page(paginator.num_pages)
-
-    return render_to_response('list.html', {"contacts": contacts, 'comls': comls, 'post': post, 'allcom': allcom})
 
 
 def newcabspk(request, pk):
