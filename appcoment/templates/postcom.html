@@ -6,13 +6,11 @@
 </head>
 <body>
 
-{% if user.is_authenticated %}Hello, {{ user.username }}.
-
-{% endif %}
 
 <h1>Post:</h1>
     {% for foo in post %}
-        <li>{{ foo.id }}: {{ foo.conten }} - chield: {{ foo.child}} </li>
+        <h1>{{ foo.title }}</h1>
+        <li>{{ foo.id }}: {{ foo.conten }} </li>
         <br>
 
     {% endfor %}

@@ -1,9 +1,8 @@
-from django.views.generic import ListView
 from django.shortcuts import render_to_response, get_object_or_404
 from .models import  CommentList, PostModel, Genre
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.template import RequestContext
 
+import uuid
 
 
 def postcoments(request, pk):
@@ -28,7 +27,7 @@ def postcoments(request, pk):
 def post_update(request, pk):
     instance = get_object_or_404(CommentList, id=pk)
     instance.likecom="-"
-    instance.save()
+    instance.save() #entries = Entry.objects.select_for_update().filter(author=request.user)
     context = {
         "likecom": instance.likecom  #https://www.youtube.com/watch?v=70tK2zjwM50
     }
@@ -67,3 +66,14 @@ def newcabs(request):
     comls = CommentList.objects.all()
     post = PostModel.objects.all()
     return render_to_response('base.html', {'comls': comls, 'post': post})
+
+
+def postaddrows(request):
+    for i in range(0, 100):
+        title = 'Title New:   ' + (str(uuid.uuid4()))
+        conten = 'Content New:   ' + (str(uuid.uuid4()))
+        PostModel.objects.create(title = title, conten= conten)
+
+    post = PostModel.objects.all()
+    counter = ''
+    return render_to_response('base.html', {'post': post})

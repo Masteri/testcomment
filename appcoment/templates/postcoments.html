@@ -11,7 +11,8 @@
 
 <h1>Post:</h1>
     {% for foo in post %}
-        <li>№: {{ foo.id }}. {{ foo.conten }} - chield: {{ foo.child}} </li>
+        <h2>{{ foo.title }}</h2>
+        <li>№: {{ foo.id }}. {{ foo.conten }} </li>
         <br>
 
     {% endfor %}

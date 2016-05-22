@@ -24,6 +24,9 @@ class PostModel(models.Model):
     conten = models.TextField()
     timecreated = models.DateTimeField(verbose_name='Data Created', auto_now_add=True)
 
+    def get_absolute_url(self):
+        return  "/postcoments/%i/" % self.pk #reverse('like', kwargs={'pk': self.pk})  #
+
     def __str__(self):
         return self.title
 
@@ -42,12 +45,10 @@ class CommentAbs(MPTTModel):
 
 
 
-@python_2_unicode_compatible
+#@python_2_unicode_compatibleC
 class CommentList(CommentAbs):
     autor = models.ForeignKey(User)
     textcom = models.ForeignKey(PostModel, related_name='postnuber')
-
-
 
     def get_absolute_url(self):
         return  "/postcoments/%i/" % self.pk #reverse('like', kwargs={'pk': self.pk})  #

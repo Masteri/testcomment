@@ -5,16 +5,13 @@
     <title>Title</title>
 </head>
 <body>
-{% if user.is_authenticated %}Hello, {{ user.username }}.
 
-{% endif %}
 
 <h1>Post:</h1>
+<h5><a href="postaddrows/">Add 100 random Posts</a> </h5>
+<h3><a href="/">Home</a></h3>
     {% for foo in post %}
-        <li>{{ foo.id }}: {{ foo.conten }} - chield: {{ foo.child}} </li>
-
-        <li> {{ foo.id }}:</li>
-
+        <li><a href="{{ foo.get_absolute_url }}" >{{ foo.id }}: {{ foo.title }} </a></li> <br>
     {% endfor %}
 
 <h1>Comentlist!</h1>
@@ -23,20 +20,6 @@
      Parent:{{ comlss.parent }}
 
 {% endfor %}
-
-<h1>Coment!</h1>
-    <ul>
-        {% for comment in comments %}
-            <li> <strong>comments:</strong> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
-            <li> <strong>comments:</strong> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
-        {% endfor %}
-    </ul>
-
-<h1>
-    {% for comment in comments %}
-        <li> {{ comment.comtopost_id }} + {{ comment.comtopost }} + chield: {{ comment.id}}</li>
-    {% endfor %}
-</h1>
 
 </body>
 </html>
