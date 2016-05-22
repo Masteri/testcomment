@@ -5,8 +5,8 @@
     <title>New</title>
 </head>
 <body>
-{{ commentlist_list.child }}{{ commentlist_list.autor }}{{ commentlist_list.get_absolute_url}}
-{{ commentlist_list.parent_id }}{{ commentlist_list.parent }}{{ commentlist_list.comtopost_id }}
-{{ commentlist_list.comtopost }}{{ commentlist_list.textcomment }}{{ commentlist_list.likecom}}
+{% for post in posts %}
+    <h4><a href="{% url 'post.id' %}"> {{ post.title }} </a></h4>
+{% endfor %}
 </body>
 </html>
