@@ -50,10 +50,14 @@ def newcabs(request):
 
 
 def postaddrows(request):
-    for i in range(0, 100):
+    for i in range(0, 1):
         title = 'Title New:   ' + (str(uuid.uuid4()))
         conten = 'Content New:   ' + (str(uuid.uuid4()))
         PostModel.objects.create(title = title, conten= conten)
+        for c in range(0, 5):
+            compk = CommentList
+            randomcomment = CommentList.objects.select_related('textcom').filter(textcom=compk)
+            pass
 
     post = PostModel.objects.all()
     counter = ''
