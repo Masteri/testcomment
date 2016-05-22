@@ -55,9 +55,9 @@ def postaddrows(request):
         conten = 'Content New:   ' + (str(uuid.uuid4()))
         PostModel.objects.create(title = title, conten= conten)
         for c in range(0, 5):
-            compk = CommentList
-            randomcomment = CommentList.objects.select_related('textcom').filter(textcom=compk)
-            pass
+            #compk = CommentList
+            randomcomment = CommentList.objects.select_related('textcom').filter(textcom=i.id)
+
 
     post = PostModel.objects.all()
     counter = ''
