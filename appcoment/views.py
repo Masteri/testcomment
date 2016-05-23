@@ -2,6 +2,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from .models import  CommentList, PostModel
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
 import uuid
 import random
 
@@ -27,13 +28,10 @@ def postcoments(request, pk):
 
 def post_update(request, pk):
     if CommentList.objects.filter(pk=pk, likecom='-'):
-        CommentList.objects.filter(pk=pk).update(like='+')
-    elif CommentList.objects.filter(pk=pk):
-        CommentList.objects.filter(pk=pk).update(like='+')
-    context = {
-        "likecom": CommentList.objects.filter(pk=pk) # must to change
-    }
-    return render_to_response('postcoments.html', request, context)
+        CommentList.objects.filter(pk=pk).update(likecom='+')
+    elif CommentList.objects.filter(pk=pk, likecom='+'):
+        CommentList.objects.filter(pk=pk).update(likecom='-')
+    return redirect('/')
 
 
 
