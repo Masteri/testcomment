@@ -1,4 +1,11 @@
-pip install -r requirements.txt
+
+sudo easy_install pip
+sudo apt-get install python-virtualenv or sudo pip install virtualenv
+virtualenv env          #creating folder with virtual envoirement scripts
+source env/bin/activate
+git clone https://github.com/Masteri/testcomment.git
+cd testcomment/
+sudo pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
 python manage.py makemigrations appcoment
