@@ -9,5 +9,7 @@ python manage.py runserver
 
 Click to "Add some random Data" to add some data :)
 
+I want to fix paginating, update like, and scrip that fill database random datas
+
 
 

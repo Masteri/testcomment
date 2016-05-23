@@ -26,14 +26,12 @@ def postcoments(request, pk):
 
 
 def post_update(request, pk):
-    instance = get_object_or_404(CommentList, id=pk)
-    if instance.likecom('-'):
-        instance.likecom='+'
-    elif instance.likecom('+'):
-        instance.likecom='-'
-    instance.save() #entries = Entry.objects.select_for_update().filter(author=request.user)
+    if CommentList.objects.filter(pk=pk, likecom='-'):
+        CommentList.objects.filter(pk=pk).update(like='+')
+    elif CommentList.objects.filter(pk=pk):
+        CommentList.objects.filter(pk=pk).update(like='+')
     context = {
-        "likecom": instance.likecom  #https://www.youtube.com/watch?v=70tK2zjwM50
+        "likecom": CommentList.objects.filter(pk=pk) # must to change
     }
     return render_to_response('postcoments.html', request, context)
 
@@ -56,7 +54,7 @@ def index(request):
 
 def postaddrows(request):
     autor = User.objects.get()
-    for i in range(0, 5):                                                                 #!!!creating some Post in range
+    for i in range(0, 5):                                                                  #!!!creating some Post in range
         title = 'Title New:   ' + (str(uuid.uuid4()))                                      #creating random string for title
         conten = 'Content New:   ' + (str(uuid.uuid4()))                                   #creating random string for content
         PostModel.objects.create(title = title, conten= conten)                            #add to data Post
@@ -71,9 +69,9 @@ def postaddrows(request):
                 CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=textcom)
                 i = i + 1
 
-            p = CommentList.objects.all()
+            p = CommentList.objects.all()[:100]
             for a in p:
-                textcomment = 'Parent? Comment Text Content New:   ' + (str(uuid.uuid4()))
+                textcomment = 'I\'m chield Comment Text Content New:   ' + (str(uuid.uuid4()))
                 compost = PostModel.objects.get(pk=c.pk)
                 CommentList.objects.create(textcomment=textcomment, autor=autor, textcom=compost).move_to(a)
 
